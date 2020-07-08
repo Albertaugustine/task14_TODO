@@ -25,7 +25,7 @@
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
         
-           <div class="container-sm pt-5 shadow p-3 mb-5 bg-white rounded">-->
+           <div class="container-sm pt-5 shadow p-3 mb-5 bg-white rounded">
                 <div class="container row bg-primary text-white">
                     <div class="col-sm-1">
                         <span class="material-icons style="font-size:28px;">calendar_view_day</span>
@@ -43,36 +43,37 @@
                     </div>
                     <div class="col-sm-4">
                         <form class="example" ng-submit="">
-                            <div>
+                            
                             <input type="text" placeholder="Search.." name="search">
                             <button type="submit"><i class="fa fa-search"></i></button>
-                            </div>
+                            
                           </form>
 
                     </div>
 
                 </div>
                 <div class="container row text-white">
-                    
-                    <div class="col-sm-8">
-                        <input type="text" placeholder="Search">
+                    <form class="form-inline" ng-submit="add()" name="inp">
+                            <input type="text" ng-model="newtask" placeholder="Type task">
 
-                    </div>
-                    <div class="col-sm-4">
-                        <input type="button" value="Add task">
+                            <input type="submit"  value="Add task">                  
                     
-
-                    </div>
+                    </form>   
 
                 </div>
                 <div class="container row text-white">
                     
-                    <div class="col-sm-8">
-                        <input type="checkbox" >
-
-                    </div>
-                    <div class="col-sm-4">
-                        <input type="button" value="Delete">
+                    <div class="col-sm-12">
+                        <table>
+                            <tr ng-repeat="x in names">
+                                <td><input type="checkbox" ng-model="x.done">  </td>            
+                                <td>{{ $index + 1 }}.</td>
+                                <td><span ng-bind="x.Text1"></span></td>
+                                <td><input type="button" ng-click="remove()" name="del" value="Delete selected"></td>
+                                
+                                
+                             </tr>
+                        </table>
                     
 
                     </div>
@@ -83,6 +84,27 @@
         </section>
     </div>
 
+    <script>
+        var a = angular.module('myApp',[]);
+        a.controller('myCtrl',function($scope){
+            $scope.names=[];
+            $scope.add=function() {
+                
+                $scope.names.push({Text1:$scope.newtask});
+                $scope.newtask=null;
+            };
 
+            $scope.remove=function() {
+                var tmp=$scope.names;
+                $scope.names=[];
+                angular.forEach(tmp, function(x) {
+                    if (!x.done) $scope.names.push(x);
+                });
+
+            }
+
+
+        });
+    </script>
 </body>
 </html>
