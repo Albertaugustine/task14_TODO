@@ -44,7 +44,7 @@
                     <div class="col-sm-4">
                         <form class="example" ng-submit="">
                             
-                            <input type="text" placeholder="Search.." name="search">
+                            <input type="text" placeholder="Search.." ng-model="search" name="search">
                             <button type="submit"><i class="fa fa-search"></i></button>
                             
                           </form>
@@ -64,8 +64,11 @@
                 <div class="container row text-white">
                     
                     <div class="col-sm-12">
+                       
                         <table>
-                            <tr ng-repeat="x in names">
+ 
+                            <tr ng-repeat="x in names | filter : search">
+                                
                                 <td><input type="checkbox" ng-model="x.done">  </td>            
                                 <td>{{ $index + 1 }}.</td>
                                 <td><span ng-bind="x.Text1"></span></td>
