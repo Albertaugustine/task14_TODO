@@ -38,7 +38,7 @@
                     
                     <div class="col-sm-3 " >
                         <!--<input type="button" class="btn btn-info" value="Add new task">-->
-                        <button class="btn btn-info btn-sm" value="">Add new task
+                        <button class="btn btn-info btn-sm" id='btn' value="">Add new task
                             <span class="material-icons icon-sm style="font-size:10px;">add</span></button>
                     </div>
                     <div class="col-sm-4">
@@ -54,9 +54,9 @@
                 </div>
                 <div class="container row text-white">
                     <form class="form-inline" ng-submit="add()" name="inp">
-                            <input type="text" ng-model="newtask" placeholder="Type task">
+                            <input type="text" class="mr-sm-2" ng-model="newtask" placeholder="Type task">
 
-                            <input type="submit"  value="Add task">                  
+                            <input type="submit" class="ml-sm-8" value="Add task">                  
                     
                     </form>   
 
@@ -69,7 +69,7 @@
                                 <td><input type="checkbox" ng-model="x.done">  </td>            
                                 <td>{{ $index + 1 }}.</td>
                                 <td><span ng-bind="x.Text1"></span></td>
-                                <td><input type="button" ng-click="remove()" name="del" value="Delete selected"></td>
+                                <td><button type="submit" class="btn btn-info btn-sm" ng-click="remove()" name="del" value="Delete selected">Delete</button></td>
                                 
                                 
                              </tr>
@@ -84,6 +84,8 @@
         </section>
     </div>
 
+   
+    
     <script>
         var a = angular.module('myApp',[]);
         a.controller('myCtrl',function($scope){
@@ -102,9 +104,12 @@
                 });
 
             }
+            
 
 
         });
+        
     </script>
+    
 </body>
 </html>
