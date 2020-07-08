@@ -18,81 +18,85 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-      <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!--CSS FILE-->  
+    <link rel="stylesheet" type="text/css" href="main.css">
     
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
         
-           <div class="container-sm pt-5 shadow p-3 mb-5 bg-white rounded">
-                <div class="container row bg-primary text-white">
-                    <div class="col-sm-1">
-                        <span class="material-icons style="font-size:28px;">calendar_view_day</span>
-                    </div>
-    
-                    <div class="col-sm-4 text-center">
-                        <h4>TASK MANAGER</h4>
-                    </div>
+    <div class="container-sm pt-5 shadow p-3 mb-5 bg-white rounded">
+        <div class="container row bg-primary text-white">
+            <div class="col-sm-1">
+                <span class="material-icons style="font-size:28px;">calendar_view_day</span>
+            </div>
+
+            <div class="col-sm-4 text-center">
+                <h4>TASK MANAGER</h4>
+            </div>
+            
+            
+            <div class="col-sm-3 " >
+                <!--<input type="button" class="btn btn-info" value="Add new task">-->
+                <button class="btn btn-info btn-sm" id='btn' ng-click="setFocus()" id="bt" value="">Add new task
+                    <span class="material-icons icon-sm style="font-size:10px;">add</span></button>
+            </div>
+
+            <!--SEARCH BAR-->
+            <div class="col-sm-4">
+                <form class="example" ng-submit="">
                     
+                    <input type="text" placeholder="Search.." ng-model="search" name="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
                     
-                    <div class="col-sm-3 " >
-                        <!--<input type="button" class="btn btn-info" value="Add new task">-->
-                        <button class="btn btn-info btn-sm" id='btn' value="">Add new task
-                            <span class="material-icons icon-sm style="font-size:10px;">add</span></button>
-                    </div>
-                    <div class="col-sm-4">
-                        <form class="example" ng-submit="">
-                            
-                            <input type="text" placeholder="Search.." ng-model="search" name="search">
-                            <button type="submit"><i class="fa fa-search"></i></button>
-                            
-                          </form>
-
-                    </div>
-
-                </div>
-                <div class="container row text-white">
-                    <form class="form-inline" ng-submit="add()" name="inp">
-                            <input type="text" class="mr-sm-2" ng-model="newtask" placeholder="Type task">
-
-                            <input type="submit" class="ml-sm-8" value="Add task">                  
-                    
-                    </form>   
-
-                </div>
-                <div class="container row text-white">
-                    
-                    <div class="col-sm-12">
-                       
-                        <table>
- 
-                            <tr ng-repeat="x in names | filter : search">
-                                
-                                <td><input type="checkbox" ng-model="x.done">  </td>            
-                                <td>{{ $index + 1 }}.</td>
-                                <td><span ng-bind="x.Text1"></span></td>
-                                <td><button type="submit" class="btn btn-info btn-sm" ng-click="remove()" name="del" value="Delete selected">Delete</button></td>
-                                
-                                
-                             </tr>
-                        </table>
-                    
-
-                    </div>
-
-                </div>
+                </form>
 
             </div>
-        </section>
-    </div>
 
+        </div>
+
+        <!--INPUT FIELD FOR ADDING TASK-->
+        <div class="container row text-white">
+            <form class="form-inline" ng-submit="add()" name="inp">
+                    <input type="text" class="mr-sm-2" ng-model="newtask" id="name" placeholder="Type task">
+                    <input type="submit" class="ml-sm-8" value="Add task">                  
+            </form>   
+        </div>
+
+        <!--DATA FROM INPUT FIELD ADDED TO TABLE-->
+        <div class="container row text-white">
+            <div class="col-sm-12">
+                <table>
+                    <tr ng-repeat="x in names | filter : search">
+                        
+                        <td><input type="checkbox" ng-model="x.done">  </td>            
+                        <td>{{ $index + 1 }}.</td>
+                        <td><span ng-bind="x.Text1"></span></td>
+                        <td><button type="submit" class="btn btn-info btn-sm" ng-click="remove()" name="del" value="Delete selected">Delete</button></td>  
+                    
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
    
     
     <script>
         var a = angular.module('myApp',[]);
-        a.controller('myCtrl',function($scope){
+        a.controller('myCtrl',function($scope, $window){
             $scope.names=[];
+            $scope.setFocus = function () {
+                var name = $window.document.getElementById('name');
+                
+                if (name.value != '')
+                    $scope.add();
+                else {
+                    alert('NO INPUT');
+                    name.focus();
+                }
+                
+            };
+            
             $scope.add=function() {
                 
                 $scope.names.push({Text1:$scope.newtask});
@@ -105,10 +109,10 @@
                 angular.forEach(tmp, function(x) {
                     if (!x.done) $scope.names.push(x);
                 });
+                $scope.search='';
 
             }
             
-
 
         });
         
